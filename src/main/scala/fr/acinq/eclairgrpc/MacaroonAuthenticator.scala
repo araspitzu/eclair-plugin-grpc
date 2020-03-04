@@ -14,7 +14,6 @@ class MacaroonAuthenticator(adminMacaroon: String) extends ServerInterceptor wit
   val MACAROON_KEY: Metadata.Key[String] = getAsciiMetadata("macaroon")
 
   override def interceptCall[ReqT, RespT](serverCall: ServerCall[ReqT, RespT], metadata: Metadata, serverCallHandler: ServerCallHandler[ReqT, RespT]): ServerCall.Listener[ReqT] = {
-    // check the macaroon contained
     Try {
       val clientMacaroon = MacaroonsBuilder.deserialize(metadata.get(MACAROON_KEY))
       val verifier = new MacaroonsVerifier(clientMacaroon)
